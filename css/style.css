@@ -5,6 +5,8 @@
 
 body {
   font-family: "Mohave", sans-serif;
+  margin: 0;
+  border: 0;
 }
 
 h4 {
@@ -27,9 +29,45 @@ strong {
 }
 
 .wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  height: 350px;
+  width: 100%;
+
+  background-image: url("https://media.istockphoto.com/photos/fits-perfect-picture-id938463764");
+  background-position-y: 35%;
+  background-size: cover;
+
+  filter: contrast(1.4) sepia(0.2);
+}
+
+.wrapper .__hero {
+  position: relative;
+  background: rgba(0, 0, 0, 0.335);
+  top: 0;
+  height: 350px;
+  width: 100%;
+  z-index: 2;
+}
+
+.wrapper .__hero .intestazione {
+  position: absolute;
+  padding: 30px;
+  height: 100%;
+  color: whitesmoke;
+  font-size: 1.5rem;
+  z-index: 3;
+}
+
+.wrapper .__hero .intestazione h2 {
+  margin-bottom: 0;
 }
 
 .wrapper__titles {
