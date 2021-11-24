@@ -1,3 +1,7 @@
+function setCartProductsNum() {
+  cartProductsNum.textContent = `Numero prodotti: ${cartList.length}`;
+}
+
 function createProduct(parent, imgUrl, productTitle, textPrice, idProduct) {
   const product = document.createElement("div");
   product.className = "product";
@@ -13,7 +17,10 @@ function createProduct(parent, imgUrl, productTitle, textPrice, idProduct) {
         (product) => parseInt(e.currentTarget.id) === product.id
       )
     );
+    setCartProductsNum();
     alert(`Prodotto aggiunto al carrello, numero prodotti: ${cartList.length}`);
+    // Nel caso in cui volessimo aggiungere una interazione col LocalStorage
+    localStorage.setItem("totCartitems", cartList.length);
   });
 }
 
@@ -62,14 +69,22 @@ const getProductsList = async () => {
   return renderProducts(data);
 };
 
-const wrapperProducts = document.querySelector(".wrapper__products");
-const cartBtn = document.querySelector(".cartBtn");
-
-const cartList = [];
 let productsList = [];
+const wrapperProducts = document.querySelector(".wrapper__products");
 
+// Parte inerente alla logica del carrello
+let cartList = [];
+
+const localStorageTot = localStorage.getItem("totCartitems");
+const cartBtn = document.querySelector(".cartBtn");
+const cartProductsNum = document.querySelector(".cartProductsNum");
+const clearCartBtn = document.querySelector(".clearCart");
+
+// Flusso generale
+cartProductsNum.textContent = `Numero prodotti: ${localStorageTot}`;
 getProductsList();
 
-// cartBtn.addEventListener("click", () => {
-//   console.log(cartList);
-// });
+clearCartBtn.addEventListener("click", () => {
+  cartList.length = 0;
+  setCartProductsNum();
+});
