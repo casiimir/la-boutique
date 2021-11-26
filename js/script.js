@@ -62,6 +62,22 @@ function renderProducts(listItems) {
   });
 }
 
+function handleShowCartBtn() {
+  // showCartBtn.setAttribute("disabled", true);
+  wrapper.removeChild(showCartBtn);
+  wrapperProducts.classList.add("sideViewAnim");
+
+  document
+    .querySelectorAll(".product")
+    .forEach((product) => wrapperProducts.removeChild(product));
+
+  renderProducts(JSON.parse(localStorageTot) || cartList);
+
+  setTimeout(() => {
+    wrapperProducts.classList.remove("sideViewAnim");
+  }, 1000);
+}
+
 // Async await
 const getProductsList = async () => {
   const res = await fetch("https://fakestoreapi.com/products");
@@ -78,6 +94,7 @@ const getProductsList = async () => {
 };
 
 let productsList = [];
+const wrapper = document.querySelector(".wrapper");
 const wrapperProducts = document.querySelector(".wrapper__products");
 
 // Parte inerente alla logica del carrello
@@ -87,6 +104,7 @@ const localStorageTot = localStorage.getItem("totCartitems");
 const cartBtn = document.querySelector(".cartBtn");
 const cartProductsNum = document.querySelector(".cartProductsNum");
 const clearCartBtn = document.querySelector(".clearCart");
+const showCartBtn = document.querySelector(".showCartBtn");
 
 // Flusso generale
 const parsedTotCardItemsLen =
@@ -97,5 +115,8 @@ getProductsList();
 
 clearCartBtn.addEventListener("click", () => {
   cartList.length = 0;
+  localStorage.removeItem("totCartitems");
   setCartProductsNum();
 });
+
+showCartBtn.addEventListener("click", handleShowCartBtn);
