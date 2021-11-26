@@ -62,6 +62,26 @@ function renderProducts(listItems) {
   });
 }
 
+function handleFilterSearch() {
+  wrapperProducts.classList.add("sideViewAnim");
+
+  document
+    .querySelectorAll(".product")
+    .forEach((product) => wrapperProducts.removeChild(product));
+
+  renderProducts(
+    productsList.filter((product) =>
+      product.title
+        .toLowerCase()
+        .includes(inputFilterSearch.value.toLowerCase())
+    )
+  );
+
+  setTimeout(() => {
+    wrapperProducts.classList.remove("sideViewAnim");
+  }, 1000);
+}
+
 // Async await
 const getProductsList = async () => {
   const res = await fetch("https://fakestoreapi.com/products");
@@ -78,6 +98,7 @@ const getProductsList = async () => {
 };
 
 let productsList = [];
+const wrapper = document.querySelector(".wrapper");
 const wrapperProducts = document.querySelector(".wrapper__products");
 
 // Parte inerente alla logica del carrello
@@ -87,6 +108,8 @@ const localStorageTot = localStorage.getItem("totCartitems");
 const cartBtn = document.querySelector(".cartBtn");
 const cartProductsNum = document.querySelector(".cartProductsNum");
 const clearCartBtn = document.querySelector(".clearCart");
+const showCartBtn = document.querySelector(".showCartBtn");
+const inputFilterSearch = document.querySelector(".inputFilterSearch");
 
 // Flusso generale
 const parsedTotCardItemsLen =
@@ -97,5 +120,8 @@ getProductsList();
 
 clearCartBtn.addEventListener("click", () => {
   cartList.length = 0;
+  localStorage.removeItem("totCartitems");
   setCartProductsNum();
 });
+
+showCartBtn.addEventListener("click", handleFilterSearch);
