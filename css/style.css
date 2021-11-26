@@ -111,6 +111,12 @@ strong {
   font-size: 0.9rem;
 }
 
+.inputFilterSearch,
+.labelFilterSearch {
+  width: 150px;
+  align-self: center;
+}
+
 .showCartBtn {
   margin: 20px 0;
   padding: 10px 5px;
@@ -167,5 +173,5 @@ strong {
 }
 
 .sideViewAnim {
-  transform: translateX(120%);
+  opacity: 0;
 }

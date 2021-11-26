@@ -62,16 +62,20 @@ function renderProducts(listItems) {
   });
 }
 
-function handleShowCartBtn() {
-  // showCartBtn.setAttribute("disabled", true);
-  wrapper.removeChild(showCartBtn);
+function handleFilterSearch() {
   wrapperProducts.classList.add("sideViewAnim");
 
   document
     .querySelectorAll(".product")
     .forEach((product) => wrapperProducts.removeChild(product));
 
-  renderProducts(JSON.parse(localStorageTot) || cartList);
+  renderProducts(
+    productsList.filter((product) =>
+      product.title
+        .toLowerCase()
+        .includes(inputFilterSearch.value.toLowerCase())
+    )
+  );
 
   setTimeout(() => {
     wrapperProducts.classList.remove("sideViewAnim");
@@ -105,6 +109,7 @@ const cartBtn = document.querySelector(".cartBtn");
 const cartProductsNum = document.querySelector(".cartProductsNum");
 const clearCartBtn = document.querySelector(".clearCart");
 const showCartBtn = document.querySelector(".showCartBtn");
+const inputFilterSearch = document.querySelector(".inputFilterSearch");
 
 // Flusso generale
 const parsedTotCardItemsLen =
@@ -119,4 +124,4 @@ clearCartBtn.addEventListener("click", () => {
   setCartProductsNum();
 });
 
-showCartBtn.addEventListener("click", handleShowCartBtn);
+showCartBtn.addEventListener("click", handleFilterSearch);
